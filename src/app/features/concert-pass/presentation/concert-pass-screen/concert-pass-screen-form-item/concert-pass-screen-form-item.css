@@ -1,0 +1,10 @@
+:host {
+  width: 100%;
+}
+
+mat-icon {
+  --size: 20px;
+  font-size: var(--size);
+  width: var(--size);
+  height: var(--size);
+}

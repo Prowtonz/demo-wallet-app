@@ -1,0 +1,89 @@
+<div class="relative w-screen h-screen overflow-hidden bg-background text-white">
+  <div class="absolute inset-0 z-0">
+    <img
+      ngSrc="PassKit_Demo_App/app_bg.jpg"
+      fill
+      priority
+      alt="App Background"
+      class="object-cover">
+  </div>
+  <main class="absolute inset-0 z-10 overflow-y-auto flex flex-col justify-center items-center p-4 sm:p-6">
+    <form [formRoot]="passForm" class="w-screen max-w-xs">
+      <div class="w-full  bg-neutral-950/60 border-2 border-neutral-800 backdrop-blur-xl p-6 rounded-3xl">
+        <img
+          ngSrc="PassKit_Demo_App/logo_abbreviated.png"
+          alt="Logo image"
+          width="175"
+          height="175"
+          class="m-auto"
+          priority />
+        <p class="text-xs font-semibold tracking-[0.2em] text-center mb-6">IRON HORSE MEDIA</p>
+        <h1 class="font-fraunces font-bold italic text-3xl leading-none bg-linear-to-r from-[#F0EEFF] from-30% to-[#C4BFFF] bg-clip-text text-transparent text-center mb-2">Jimi Hendrix</h1>
+        <h2 class="font-fraunces font-bold text-xl text-center">&amp; the Electric Church</h2>
+        <p class="font-xs tracking-widest font-light text-center text-[#C4BFFF] mb-6">Live at the Event Horizon</p>
+        <div class="flex flex-col gap-4">
+          <concert-pass-screen-form-item icon="person" label="First & Last Name">
+            <input
+              [formField]="passForm.name"
+              type="text"
+              placeholder="Full Name"
+              class="wallet-theme bg-input border-border focus-visible:border-border transition-[border-color] duration-500"
+              hlmInput
+              parseFullName />
+          </concert-pass-screen-form-item>
+          <concert-pass-screen-form-item icon="calendar_month" label="Date">
+            <hlm-date-picker
+              [formField]="passForm.date"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
+              class="wallet-theme"
+              autoCloseOnSelect>
+              <hlm-date-picker-trigger class="duration-500 [&_svg]:hidden w-full">Pick a date</hlm-date-picker-trigger>
+            </hlm-date-picker>
+          </concert-pass-screen-form-item>
+          <concert-pass-screen-form-item icon="star" label="Pass Tier">
+            <hlm-select [formField]="passForm.tier" class="wallet-theme">
+              <hlm-select-trigger class="bg-input border-border [&_svg]:hidden w-full transition-[border-color] duration-500">
+                <hlm-select-placeholder>Please choose a tier</hlm-select-placeholder>
+                <ng-template hlmSelectValueTemplate>
+                  @if(selectedTierItem(); as item) {
+                    <mat-icon
+                      class="text-(--icon-color)"
+                      [style.--icon-color]="item.color"
+                      [fontIcon]="item.icon" />
+                      {{ item.label }}
+                  }
+                </ng-template>
+              </hlm-select-trigger>
+              <hlm-select-content *hlmSelectPortal class="p-1 border-2 border-neutral-800">
+                @for(item of labels | keyvalue: preserveOrder; track item.key) {
+                  <div class="p-0.5 rounded-sm select-item-border">
+                    <hlm-select-item [value]="item.key">
+                      <mat-icon
+                        class="text-(--icon-color)"
+                        [style.--icon-color]="item.value.color"
+                        [style.--accent-foreground]="item.value.color"
+                        [fontIcon]="item.value.icon" />
+                      {{ item.value.label }}
+                    </hlm-select-item>
+                  </div>
+                }
+              </hlm-select-content>
+            </hlm-select>
+          </concert-pass-screen-form-item>
+          @let buttonColor = '#6DE1E0';
+          <button
+            type="submit"
+            [disabled]="passForm().invalid() || passForm().submitting()"
+            [style.--muted]="buttonColor"
+            [style.background]="buttonColor"
+            class="text-black rounded-full cursor-pointer m-auto mt-3 tracking-wide"
+            variant="ghost"
+            hlmBtn>
+            <mat-icon fontIcon="confirmation_number" />GENERATE MY WALLET PASS
+          </button>
+        </div>
+      </div>
+    </form>
+  </main>
+</div>

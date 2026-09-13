@@ -1,0 +1,66 @@
+@reference 'tailwindcss';
+
+
+@property --g-color-1 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #111531;
+}
+@property --g-color-2 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #111531;
+}
+
+@property --item-color-1 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #111531;
+}
+@property --item-color-2 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: #111531;
+}
+
+mat-icon {
+  --icon-size: 15px;
+  font-size: var(--icon-size);
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+hlm-select-content {
+  @apply p-1;
+  --text-color: white;
+  --accent-foreground: var(--text-color);
+  --popover: #111531;
+  --popover-foreground: var(--text-color);
+  .select-item-border {
+    background: linear-gradient(to right, var(--g-color-1), var(--g-color-2));
+    transition: --g-color-1 500ms, --g-color-2 500ms;
+    &:has(hlm-select-item[data-highlighted]) {
+      --g-color-1: #8E7DC5;
+      --g-color-2: #D1C4A9;
+    }
+  }
+}
+
+hlm-select-item {
+  background: linear-gradient(to right, var(--item-color-1), var(--item-color-2));
+  transition: --item-color-1 500ms, --item-color-2 500ms;
+  &[data-highlighted] {
+    --item-color-1: #40307D;
+    --item-color-2: #685848;
+  }
+}
+
+button[hlmBtn] {
+  box-shadow: none;
+  transition: box-shadow 500ms;
+  &:not([disabled]) {
+    box-shadow:
+      0 0 15px rgba(46, 236, 202, 0.5),
+      0 0 35px rgba(46, 236, 202, 0.25);
+  }
+}
